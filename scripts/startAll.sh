@@ -78,17 +78,11 @@ done
 
 echo "Loading data..."
 # Load data
-if ! [ -e "fleet.json" ]; then 
-	wget http://assets.springone2gx2015.s3.amazonaws.com/fleet/fleet.json
-fi
 curl -s -X POST http://localhost:$fleet_location_service_port/purge
-curl -sH "Content-Type: application/json" http://localhost:$fleet_location_service_port/fleet -d @fleet.json
+curl -sH "Content-Type: application/json" http://localhost:$fleet_location_service_port/fleet -d @$PROJECT_HOME/data/fleet.json
 
-if ! [ -e "serviceLocations.json" ]; then 
-	wget http://assets.springone2gx2015.s3.amazonaws.com/fleet/serviceLocations.json
-fi
 curl -s -X POST http://localhost:$service_location_service_port/purge
-curl -sH "Content-Type: application/json" http://localhost:$service_location_service_port/bulk/serviceLocations -d @serviceLocations.json
+curl -sH "Content-Type: application/json" http://localhost:$service_location_service_port/bulk/serviceLocations -d @$PROJECT_HOME/data/serviceLocations.json
 
 echo "Starting simulator..."
 # Start the simulator
